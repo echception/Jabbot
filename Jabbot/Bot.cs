@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JabbR.Client;
 using Jabbot.Core;
 using System.ComponentModel.Composition.Primitives;
 using System.ComponentModel.Composition.Hosting;
+using JabbR.Client;
 using JabbR.Client.Models;
 using Jabbot.Sprockets.Core;
 using System.IO;
@@ -15,13 +15,12 @@ using System.Threading.Tasks;
 using Jabbot.Models;
 using System.Reflection;
 using System.Web.Management;
-using SignalR.Client.Transports;
+using Microsoft.AspNet.SignalR.Client.Transports;
 
 namespace Jabbot
 {
     public class Bot : IBot
     {
-
         private const string ExtensionsFolder = "Sprockets";
 
         private readonly string _password = string.Empty;
@@ -74,7 +73,7 @@ namespace Jabbot
 
         private void InitializeClient()
         {
-            _client = new JabbRClient(_url, new LongPollingTransport());
+            _client = new JabbRClient(_url, () => new LongPollingTransport());
 
             _client.MessageReceived += (message, room) =>
             {
